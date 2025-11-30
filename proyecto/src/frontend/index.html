@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoCycle - Sistema de Gestión de Reciclaje Sostenible</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --emerald-50: #f0fdf4;
+            --emerald-100: #dcfce7;
+            --emerald-200: #bbf7d0;
+            --emerald-300: #86efac;
+            --emerald-400: #4ade80;
+            --emerald-500: #22c55e;
+            --emerald-600: #16a34a;
+            --emerald-700: #15803d;
+            --emerald-800: #166534;
+            --emerald-900: #134e4a;
+            --text-dark: #1a202c;
+            --text-light: #4a5568;
+            --bg-light: #f7fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background-attachment: fixed;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid rgba(22, 163, 74, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 1.4rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--emerald-600) 0%, var(--emerald-700) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .navbar-brand i {
+            font-size: 1.6rem;
+            -webkit-text-fill-color: var(--emerald-600);
+        }
+
+        .nav-link {
+            font-weight: 600;
+            color: var(--text-dark) !important;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--emerald-600), var(--emerald-500));
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--emerald-600) !important;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(22, 163, 74, 0) 0%, rgba(21, 128, 61, 0.95) 100%),
+                url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            padding: 140px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(20px);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            opacity: 0.98;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-primary-custom {
+            background: white;
+            color: var(--emerald-600);
+            border: none;
+            padding: 14px 42px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            margin: 10px;
+            display: inline-block;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary-custom:hover {
+            background: var(--emerald-50);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(22, 163, 74, 0.3);
+            color: var(--emerald-700);
+            text-decoration: none;
+        }
+
+        .btn-secondary-custom {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 12px 40px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            margin: 10px;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-secondary-custom:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-color: white;
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 20px;
+        }
+
+        section h2 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 60px;
+            text-align: center;
+            color: var(--text-dark);
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--emerald-600), var(--emerald-500));
+            border-radius: 2px;
+        }
+
+        section h3 {
+            color: var(--emerald-700);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* About Section */
+        .about {
+            background: white;
+            position: relative;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(to right, var(--emerald-600), var(--emerald-500));
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .about-text strong {
+            color: var(--emerald-700);
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Values Section */
+        .values {
+            background: var(--bg-light);
+        }
+
+        .value-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid transparent;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--emerald-600), var(--emerald-500));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .value-card:hover {
+            border-color: var(--emerald-200);
+            transform: translateY(-12px);
+            box-shadow: 0 20px 50px rgba(22, 163, 74, 0.15);
+        }
+
+        .value-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .value-card i {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--emerald-600), var(--emerald-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 25px;
+            display: inline-block;
+        }
+
+        .value-card h4 {
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .value-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Features Section */
+        .features {
+            background: white;
+        }
+
+        .feature-box {
+            background: linear-gradient(135deg, white 0%, var(--bg-light) 100%);
+            padding: 35px;
+            border-radius: 12px;
+            display: flex;
+            gap: 25px;
+            margin-bottom: 35px;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(22, 163, 74, 0.08);
+            position: relative;
+        }
+
+        .feature-box:hover {
+            box-shadow: 0 15px 40px rgba(22, 163, 74, 0.15);
+            transform: translateX(8px);
+            border-color: rgba(22, 163, 74, 0.2);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--emerald-600), var(--emerald-500));
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(22, 163, 74, 0.2);
+        }
+
+        .feature-content h5 {
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .feature-content p {
+            color: var(--text-light);
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Team Section */
+        .team {
+            background: var(--bg-light);
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 40px 25px;
+            background: white;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(22, 163, 74, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-member::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--emerald-600), var(--emerald-500));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 50px rgba(22, 163, 74, 0.15);
+            border-color: rgba(22, 163, 74, 0.2);
+        }
+
+        .team-member:hover::before {
+            transform: scaleX(1);
+        }
+
+        .member-avatar {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, var(--emerald-600), var(--emerald-500));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            border: 4px solid var(--bg-light);
+            box-shadow: 0 10px 30px rgba(22, 163, 74, 0.25);
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover .member-avatar {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .member-name {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .member-role {
+            color: var(--emerald-600);
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .member-bio {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--emerald-600) 0%, var(--emerald-700) 100%),
+                url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta h2 {
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.8rem;
+            font-weight: 900;
+        }
+
+        .cta p {
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0f3d2d 0%, #134e4a 100%);
+            color: white;
+            padding: 60px 20px 30px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer h5 {
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        footer p {
+            margin: 10px 0;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        footer a {
+            color: var(--emerald-300);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        footer a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        footer ul li {
+            margin: 8px 0;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin: 50px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(22, 163, 74, 0.15);
+        }
+
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--emerald-600), var(--emerald-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            margin-top: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 500px;
+                padding: 80px 20px;
+            }
+
+            h1 {
+                font-size: 2.8rem;
+                margin-bottom: 15px;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .btn-primary-custom,
+            .btn-secondary-custom {
+                margin: 8px 5px;
+                padding: 12px 30px;
+                font-size: 0.95rem;
+            }
+
+            section h2 {
+                font-size: 2.2rem;
+                margin-bottom: 40px;
+            }
+
+            section h2::after {
+                bottom: -10px;
+            }
+
+            section {
+                padding: 60px 15px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .feature-box {
+                padding: 25px;
+                gap: 15px;
+            }
+
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--emerald-600);
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 50px 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-leaf"></i>
+                <span>EcoCycle</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">Quiénes Somos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#values">Valores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Características</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#team">Equipo</a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a class="nav-link btn btn-light" href="./home.html" style="color: var(--emerald-600);">
+                            <i class="fas fa-sign-in-alt me-2"></i>Ingresar
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>
+                <i class="fas fa-recycle me-3"></i>EcoCycle
+            </h1>
+            <p>Transformamos el reciclaje en una solución inteligente y sostenible para el planeta</p>
+            <div style="margin-top: 40px;">
+                <a href="./home.html" class="btn-primary-custom">
+                    <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+                </a>
+                <a href="#about" class="btn-secondary-custom">
+                    <i class="fas fa-arrow-down me-2"></i>Conocer Más
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>¿Quiénes Somos?</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Misión Ambiental</h3>
+                    <p>
+                        <strong>EcoCycle</strong> es una plataforma digital de gestión de reciclaje que conecta
+                        empresas, gestores de residuos y comunidades en un ecosistema sostenible.
+                    </p>
+                    <p>
+                        Nuestra misión es <strong>simplificar y democratizar el acceso a programas de
+                            reciclaje</strong>,
+                        proporcionando herramientas que permitan a cualquier organización gestionar eficientemente
+                        sus materiales reciclables.
+                    </p>
+                    <p>
+                        Creemos que la economía circular es el futuro, y que la tecnología debe ser el puente
+                        para hacer que el reciclaje sea accesible, rentable y medible.
+                    </p>
+                </div>
+                <div>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number">8,160+</div>
+                            <div class="stat-label">kg reciclados</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">124</div>
+                            <div class="stat-label">transacciones</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">empresas activas</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">$25K</div>
+                            <div class="stat-label">en ingresos generados</div>
+                        </div>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1532996122724-8f3c2cd83c5d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600"
+                        alt="Sostenibilidad"
+                        style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section id="values" class="values">
+        <div class="container">
+            <h2>Nuestros Valores</h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="value-card">
+                        <i class="fas fa-globe"></i>
+                        <h4>Sostenibilidad</h4>
+                        <p>Comprometidos con el cuidado del planeta y la preservación de recursos naturales para futuras
+                            generaciones.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="value-card">
+                        <i class="fas fa-handshake"></i>
+                        <h4>Transparencia</h4>
+                        <p>Operamos con honestidad y claridad en todas nuestras acciones, reportes y comunicaciones.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="value-card">
+                        <i class="fas fa-lightbulb"></i>
+                        <h4>Innovación</h4>
+                        <p>Utilizamos tecnología de vanguardia para ofrecer soluciones que simplifiquen el reciclaje.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="value-card">
+                        <i class="fas fa-users"></i>
+                        <h4>Colaboración</h4>
+                        <p>Creemos que juntos podemos lograr más impacto ambiental y económico positivo.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="value-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Excelencia</h4>
+                        <p>Buscamos constantemente mejorar nuestros servicios y superar las expectativas de nuestros
+                            usuarios.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="value-card">
+                        <i class="fas fa-leaf"></i>
+                        <h4>Responsabilidad</h4>
+                        <p>Nos responsabilizamos por nuestro impacto ambiental y social en la comunidad.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>¿Por Qué EcoCycle?</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h5>Gestión Centralizada</h5>
+                            <p>Administra todos tus materiales reciclables en una sola plataforma intuitiva y fácil de
+                                usar.</p>
+                        </div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h5>Reportes Detallados</h5>
+                            <p>Obtén análisis en tiempo real de tu inventario y transacciones con visualizaciones
+                                claras.</p>
+                        </div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h5>Seguridad Garantizada</h5>
+                            <p>Tus datos están protegidos con la máxima seguridad y encriptación de nivel empresarial.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h5>Acceso Móvil</h5>
+                            <p>Accede a tu plataforma desde cualquier dispositivo, en cualquier momento y lugar.</p>
+                        </div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h5>Soporte 24/7</h5>
+                            <p>Nuestro equipo está disponible para ayudarte con cualquier pregunta o inconveniente.</p>
+                        </div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h5>Escalabilidad</h5>
+                            <p>Crece con nosotros: nuestra plataforma se adapta a empresas de cualquier tamaño.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team">
+        <div class="container">
+            <h2>Nuestro Equipo</h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="member-name">Ordaz Magos Juan Pablo</div>
+                        <div class="member-role">CEO & Fundador</div>
+                        <div class="member-bio">
+                            Ambientalista con 0 años de experiencia en proyectos de sostenibilidad y economía circular.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="member-name">Huante Ríos José Luis</div>
+                        <div class="member-role">CTO & Tech Lead</div>
+                        <div class="member-bio">
+                            Ingeniero de software especializada en soluciones web escalables y seguras.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="member-name">Hernández Espinoza Diana Sofía</div>
+                        <div class="member-role">Directora de Operaciones</div>
+                        <div class="member-bio">
+                            Especialista en logística y operaciones con trayectoria en industrias sostenibles.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="member-name">Barrón Mata Jovanny</div>
+                        <div class="member-role">Community Manager</div>
+                        <div class="member-bio">
+                            Experto en relaciones comunitarias y comunicación de impacto ambiental.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>
+                <i class="fas fa-star me-3"></i>Únete a la Revolución del Reciclaje
+            </h2>
+            <p>Comienza hoy mismo a gestionar tu reciclaje de forma inteligente y sostenible</p>
+            <div>
+                <a href="./home.html" class="btn-primary-custom">
+                    <i class="fas fa-sign-in-alt me-2"></i>Acceder al Sistema
+                </a>
+                <a href="mailto:info@ecocycle.com" class="btn-secondary-custom">
+                    <i class="fas fa-envelope me-2"></i>Contactarnos
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row g-4 mb-4">
+                <div class="col-md-4">
+                    <h5 style="color: var(--emerald-300);">
+                        <i class="fas fa-leaf me-2"></i>EcoCycle
+                    </h5>
+                    <p>Transformando el reciclaje con tecnología e innovación.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 style="color: var(--emerald-300);">Enlaces</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="#about" style="color: #aaa; text-decoration: none;">Sobre Nosotros</a></li>
+                        <li><a href="#values" style="color: #aaa; text-decoration: none;">Valores</a></li>
+                        <li><a href="#features" style="color: #aaa; text-decoration: none;">Características</a></li>
+                        <li><a href="#team" style="color: #aaa; text-decoration: none;">Equipo</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 style="color: var(--emerald-300);">Contacto</h5>
+                    <p>
+                        <i class="fas fa-envelope me-2"></i>
+                        <a href="mailto:info@ecocycle.com"
+                            style="color: #aaa; text-decoration: none;">info@ecocycle.com</a>
+                    </p>
+                    <p>
+                        <i class="fas fa-phone me-2"></i>+56 9 XXXX XXXX
+                    </p>
+                </div>
+            </div>
+            <hr style="opacity: 0.3;">
+            <p>&copy; 2024 EcoCycle. Todos los derechos reservados. | Hecho con <i class="fas fa-heart"
+                    style="color: var(--emerald-400);"></i> para el planeta.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
